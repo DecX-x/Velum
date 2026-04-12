@@ -15,9 +15,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Velum - Kinetic Capital Control",
+  title: "Velum - Private Treasury Allocation for On-Chain Capital",
   description:
-    "Velum provides the technical infrastructure for sub-millisecond execution and institutional-grade custody in the decentralized landscape.",
+    "Velum helps DAOs and on-chain treasuries allocate capital confidentially using iExec Nox and Confidential Tokens on Arbitrum Sepolia.",
 };
 
 export default function RootLayout({
