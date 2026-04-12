@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Custom Colors */
+  --color-on-error-container: #ffd2c8;
+  --color-surface-variant: #262626;
+  --color-on-secondary-fixed: #3e4300;
+  --color-surface-container-highest: #262626;
+  --color-primary-container: #78b10c;
+  --color-primary-fixed-dim: #a4e144;
+  --color-error-container: #b92902;
+  --color-on-surface: #ffffff;
+  --color-on-surface-variant: #ababab;
+  --color-tertiary-dim: #eee04b;
+  --color-surface: #0e0e0e;
+  --color-secondary-container: #5c6300;
+  --color-on-secondary-container: #f6ff99;
+  --color-secondary-fixed: #dfec5f;
+  --color-inverse-primary: #456900;
+  --color-secondary-dim: #d1dd53;
+  --color-on-error: #450900;
+  --color-secondary-fixed-dim: #d1dd53;
+  --color-primary: #b2f051;
+  --color-outline: #757575;
+  --color-error: #ff7351;
+  --color-inverse-on-surface: #555555;
+  --color-surface-container-lowest: #000000;
+  --color-surface-container: #191919;
+  --color-surface-container-high: #1f1f1f;
+  --color-surface-dim: #0e0e0e;
+  --color-surface-tint: #b2f051;
+  --color-surface-bright: #2c2c2c;
+  --color-tertiary-container: #fcef58;
+  --color-on-primary-container: #172700;
+  --color-on-tertiary-container: #5f5800;
+  --color-on-tertiary-fixed: #4b4600;
+  --color-on-tertiary-fixed-variant: #6a6200;
+  --color-primary-dim: #a4e144;
+  --color-on-primary: #385700;
+  --color-inverse-surface: #f9f9f9;
+  --color-on-secondary: #505600;
+  --color-primary-fixed: #b2f051;
+  --color-tertiary: #fffae4;
+  --color-on-primary-fixed-variant: #406100;
+  --color-on-background: #ffffff;
+  --color-outline-variant: #484848;
+  --color-error-dim: #d53d18;
+  --color-tertiary-fixed: #fcef58;
+  --color-secondary: #dfec5f;
+  --color-on-secondary-fixed-variant: #596000;
+  --color-background: #0e0e0e;
+  --color-surface-container-low: #131313;
+  --color-on-primary-fixed: #2a4300;
+  --color-tertiary-fixed-dim: #eee04b;
+  --color-on-tertiary: #686100;
+
+  /* Custom Border Radius */
+  --radius-DEFAULT: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+
+  /* Font Families */
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+::root {
+  --background: #0e0e0e;
+  --foreground: #ffffff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: "Inter", sans-serif;
+}
+
+/* Material Symbols */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* Custom utilities */
+.ease-kinetic {
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
