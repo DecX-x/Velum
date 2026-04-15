@@ -3,14 +3,43 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
+import { getHandleClient } from "@/lib/nox";
 
 export default function Wrap() {
   const [isWrapping, setIsWrapping] = useState(false);
   const [amount, setAmount] = useState("");
 
-  const handleWrap = () => {
-    if (amount) {
+  const handleWrap = async () => {
+    if (!amount || isNaN(Number(amount))) return;
+    try {
       setIsWrapping(true);
+      const handleClient = await getHandleClient();
+      
+      // For MVP UI demo, we use a dummy asset address.
+      // In a real flow, this is the ERC-7984 Token address.
+      const assetAddress = "0x0000000000000000000000000000000000000000" as `0x${string}`;
+      
+      // Encrypt the plain amount
+      const { handle, handleProof } = await handleClient.encryptInput(
+        BigInt(Math.floor(Number(amount))),
+        "uint256",
+        assetAddress
+      );
+      
+      console.log("Generated Handle:", handle);
+      console.log("Generated Proof:", handleProof);
+
+      // Simulate a network transaction delay
+      setTimeout(() => {
+        setIsWrapping(false);
+        setAmount("");
+        alert(`Wrap successful!\nEncrypted Handle:\n${handle}`);
+      }, 3000);
+
+    } catch (error) {
+      console.error("Encryption failed:", error);
+      setIsWrapping(false);
+      alert("Failed to encrypt input. Check console for details.");
     }
   };
 
@@ -166,9 +195,9 @@ export default function Wrap() {
                     security
                   </span>
                   <p className="text-xs sm:text-sm text-zinc-400 leading-snug italic">
-                    "Amounts are encrypted client-side before submission. Your
+                    &quot;Amounts are encrypted client-side before submission. Your
                     private financial data never leaves your secure enclave until
-                    fully shielded."
+                    fully shielded.&quot;
                   </p>
                 </div>
               </div>

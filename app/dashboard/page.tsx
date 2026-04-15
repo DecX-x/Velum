@@ -1,10 +1,40 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useAccount, useReadContract } from "wagmi";
 import Navbar from "../components/Navbar";
+import { VELUM_TREASURY_ADDRESS, VELUM_TREASURY_ABI } from "@/lib/contracts";
+import { getHandleClient } from "@/lib/nox";
 
 export default function Dashboard() {
+  const { address, isConnected } = useAccount();
+  const [decryptedTreasury, setDecryptedTreasury] = useState<string | null>(null);
+  const [isDecrypting, setIsDecrypting] = useState(false);
+
+  const { data: latestTreasuryHandleRaw } = useReadContract({
+    address: VELUM_TREASURY_ADDRESS as `0x${string}`,
+    abi: VELUM_TREASURY_ABI,
+    functionName: "getTreasuryHandleRaw",
+  });
+
+  const handleDecryptTreasury = async () => {
+    if (!latestTreasuryHandleRaw) return;
+    try {
+      setIsDecrypting(true);
+      const handleClient = await getHandleClient();
+      // latestTreasuryHandleRaw is a bytes32
+      const decrypted = await handleClient.decrypt(latestTreasuryHandleRaw as `0x${string}`);
+      setDecryptedTreasury(decrypted.toString());
+    } catch (error) {
+      console.error("Decryption failed:", error);
+      alert("Decryption failed. Ensure you have viewer rights.");
+    } finally {
+      setIsDecrypting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen pb-24 page-transition">
       <Navbar variant="app" />
@@ -22,7 +52,7 @@ export default function Dashboard() {
               </span>
             </div>
             <div className="text-2xl sm:text-4xl font-headline font-bold tracking-tighter text-on-surface">
-              ••••••••
+              {decryptedTreasury ? `$${decryptedTreasury}` : latestTreasuryHandleRaw ? "••••••••" : "—"}
             </div>
           </div>
           <div className="bg-surface-container-low p-4 sm:p-8 rounded-xl flex flex-col justify-between min-h-[120px] sm:min-h-[160px] card-hover animate-fade-in-up delay-200">
@@ -129,11 +159,15 @@ export default function Dashboard() {
                     occurring on Oct 24, 2026 at 14:30 UTC.
                   </p>
                 </div>
-                <button className="bg-surface-container-highest hover:bg-surface-bright text-on-surface px-4 sm:px-6 py-2 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 text-sm sm:text-base btn-hover">
+                <button 
+                  onClick={handleDecryptTreasury}
+                  disabled={isDecrypting || !latestTreasuryHandleRaw}
+                  className="bg-surface-container-highest hover:bg-surface-bright text-on-surface px-4 sm:px-6 py-2 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 text-sm sm:text-base btn-hover disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   <span className="material-symbols-outlined text-base sm:text-lg">
-                    visibility
+                    {isDecrypting ? "sync" : "visibility"}
                   </span>
-                  Reveal Nominals
+                  {isDecrypting ? "Decrypting..." : "Reveal Nominals"}
                 </button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">

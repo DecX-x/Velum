@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 interface NavbarProps {
   variant?: "landing" | "app";
@@ -22,7 +23,11 @@ export default function Navbar({ variant = "app" }: NavbarProps) {
   }, []);
 
   useEffect(() => {
-    setIsMobileMenuOpen(false);
+    // Only close if it's currently open
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const navLinks =
@@ -92,16 +97,16 @@ export default function Navbar({ variant = "app" }: NavbarProps) {
               </button>
             </div>
           )}
-          <Link
-            href={variant === "landing" ? "/dashboard" : "#"}
-            className={`bg-primary text-on-primary px-6 py-2 rounded-full font-headline font-bold text-sm transition-all duration-300 ease-kinetic ${
-              variant === "landing"
-                ? "hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(178,240,81,0.15)]"
-                : "hover:bg-primary-dim active:scale-95 shadow-lg shadow-primary/10"
-            }`}
-          >
-            {variant === "landing" ? "Launch App" : "Connect Wallet"}
-          </Link>
+          {variant === "landing" ? (
+            <Link
+              href="/dashboard"
+              className="bg-primary text-on-primary px-6 py-2 rounded-full font-headline font-bold text-sm transition-all duration-300 ease-kinetic hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(178,240,81,0.15)]"
+            >
+              Launch App
+            </Link>
+          ) : (
+            <ConnectButton />
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -138,14 +143,18 @@ export default function Navbar({ variant = "app" }: NavbarProps) {
               {link.label}
             </Link>
           ))}
-          <div className="pt-4 border-t border-outline-variant/20">
-            <Link
-              href={variant === "landing" ? "/dashboard" : "#"}
-              className="block w-full text-center bg-primary text-on-primary px-6 py-3 rounded-full font-headline font-bold text-base transition-all duration-300 active:scale-95"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {variant === "landing" ? "Launch App" : "Connect Wallet"}
-            </Link>
+          <div className="pt-4 border-t border-outline-variant/20 flex justify-center">
+            {variant === "landing" ? (
+              <Link
+                href="/dashboard"
+                className="block w-full text-center bg-primary text-on-primary px-6 py-3 rounded-full font-headline font-bold text-base transition-all duration-300 active:scale-95"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Launch App
+              </Link>
+            ) : (
+              <ConnectButton />
+            )}
           </div>
         </div>
       </div>

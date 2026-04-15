@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-headline",
@@ -37,7 +38,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col selection:bg-primary selection:text-on-primary">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
