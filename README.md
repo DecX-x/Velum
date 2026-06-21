@@ -1,8 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Velum
+
+Velum helps DAOs and on-chain treasuries allocate capital confidentially using [iExec Nox](https://iex.ec/) and Confidential Tokens on [Arbitrum Sepolia](https://arbitrum.io/).
+
+It provides a private treasury allocation management system for on-chain capital.
+
+## Features
+
+- **Confidential Treasury Management**: Real-time treasury positions with privacy controls.
+- **Strategy Allocation**: Allocate capital securely and privately.
+- **Decrypted Views**: Authorized users can securely view decrypted treasury balances and activities.
+- **Arbitrum Sepolia Integration**: Built on top of Arbitrum Sepolia utilizing iExec Nox for confidential computing.
+
+## Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (React 19)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Web3 Interaction**: [viem](https://viem.sh/), [wagmi](https://wagmi.sh/), and [RainbowKit](https://www.rainbowkit.com/)
+- **Data Fetching**: [React Query](https://tanstack.com/query/latest)
+- **Confidentiality**: `@iexec-nox/handle`
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v20+ recommended)
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+Clone the repository and install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+### Running the Development Server
+
+Start the development server:
 
 ```bash
 npm run dev
@@ -10,27 +48,24 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/` - Next.js App Router containing pages, components, and layouts.
+  - `app/dashboard/` - Main dashboard views.
+  - `app/strategies/` - Strategy allocation pages.
+  - `app/treasury/` - Treasury management pages.
+  - `app/disclosure/` - Disclosure operations.
+  - `app/wrap/` - Token wrapping functionalities.
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the technologies used in this project:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [iExec Documentation](https://docs.iex.ec/) - learn about iExec Nox and Confidential Computing.
+- [Arbitrum Documentation](https://docs.arbitrum.io/) - learn about Arbitrum networks.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
